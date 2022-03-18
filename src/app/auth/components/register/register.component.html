@@ -6,7 +6,14 @@
         <p class="text-xs-center">
           <a [routerLink]="['/login']">Have a count?</a>
         </p>
-        BackendErrors are here
+
+        <!-- BackendErrors are here -->
+        <app-backend-error-msg
+          *ngIf="backendError$ | async"
+          [backedndErrors]="backendError$ | async"
+          >Backed Error msg</app-backend-error-msg
+        >
+
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <fieldset>
             <fieldset class="form-group">
@@ -37,7 +44,7 @@
             <button
               class="btn btn-lg btn-primary pull-xs-right"
               type="submit"
-              [disabled]="!form.valid"
+              [disabled]="!form.valid || (isSubmitting$ | async)"
             >
               Sign up
             </button>
